@@ -1,45 +1,72 @@
 package com.cacheproxy.client.redisclient.config;
 
-import java.io.InputStreamReader;
-import java.io.Serializable;
-
 import com.google.gson.Gson;
 
 /**
  * @desc
  * @author liya
  * @emial lijiaqiya@163.com
- * @date 2017-3-13
+ * @date 2017-3-14
  */
-public class JedisConfig implements Serializable {
+public class JedisConfig {
 
-	private static final long serialVersionUID = -6310458948491215778L;
+	private ConfigType configType;
 
-	public static Gson gson = new Gson();
+	private Config config;
 
-	private String configType;
-	private String config;
+	private static JedisConfig jedisConfig = initJedisConfig();
 
-	public String getConfigType() {
-		return configType;
+	public static JedisConfig getInstance() {
+		return jedisConfig;
 	}
 
-	public void setConfigType(String configType) {
-		this.configType = configType;
+	private static JedisConfig initJedisConfig() {
+		// 进行异常处理，文件找不到等等 TODO
+
+		JedisConfigGson jedisCofnigGson = JedisConfigGson
+				.loadConfig("jedis.json");
+
+		ConfigType configType = ConfigType.valueOf(jedisCofnigGson.getConfig());
+		JedisConfig jedisConfig = new JedisConfig();
+		Gson gson = new Gson();
+		switch (configType) {
+		case JedisSingle:
+			jedisConfig.setConfigType(ConfigType.JedisSingle);
+			jedisConfig.setConfig(gson.fromJson(jedisCofnigGson.getConfig(), JedisSinglePoolConfig.class));
+			return jedisConfig;
+		case JedisSentinel:
+			jedisConfig.setConfigType(ConfigType.JedisSentinel);
+			jedisConfig.setConfig(gson.fromJson(jedisCofnigGson.getConfig(), JedisSentinelPoolConfig.class));
+			return jedisConfig;
+		case JedisMasterSlave:
+			jedisConfig.setConfigType(ConfigType.JedisMasterSlave);
+			jedisConfig.setConfig(gson.fromJson(jedisCofnigGson.getConfig(), JedisMasterSlavePoolConfig.class));
+			return jedisConfig;
+		case ShardedJedis:
+			jedisConfig.setConfigType(ConfigType.ShardedJedis);
+			jedisConfig.setConfig(gson.fromJson(jedisCofnigGson.getConfig(), ShardedJedisPoolConfig.class));
+			return jedisConfig;
+		case ShardedJedisSentinel:
+			jedisConfig.setConfigType(ConfigType.ShardedJedisSentinel);
+			jedisConfig.setConfig(gson.fromJson(jedisCofnigGson.getConfig(), ShardedJedisSentinelPoolConfig.class));
+			return jedisConfig;
+		}
+		throw new RuntimeException("");
 	}
 
-	public String getConfig() {
+	public Config getConfig() {
 		return config;
 	}
 
-	public void setConfig(String config) {
+	public void setConfig(Config config) {
 		this.config = config;
 	}
 
-	public static JedisConfig loadConfig(String fileName) throws Exception {
-		return gson.fromJson(new InputStreamReader(JedisConfig.class
-				.getClassLoader().getResourceAsStream(fileName)),
-				JedisConfig.class);
+	public ConfigType getConfigType() {
+		return configType;
 	}
 
+	public void setConfigType(ConfigType configType) {
+		this.configType = configType;
+	}
 }

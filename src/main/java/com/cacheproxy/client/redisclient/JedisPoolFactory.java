@@ -4,7 +4,7 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.util.Pool;
 
 import com.cacheproxy.client.redisclient.config.ConfigType;
-import com.cacheproxy.client.redisclient.config.JedisConfig;
+import com.cacheproxy.client.redisclient.config.JedisConfigGson;
 import com.cacheproxy.client.redisclient.config.JedisSinglePoolConfig;
 import com.google.gson.Gson;
 
@@ -40,9 +40,9 @@ public class JedisPoolFactory {
 		/**
 		 * 按照格式来拆分
 		 */
-		JedisConfig config = null;
+		JedisConfigGson config = null;
 		try {
-			config = JedisConfig.loadConfig("jedis.json");
+			config = JedisConfigGson.loadConfig("jedis.json");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

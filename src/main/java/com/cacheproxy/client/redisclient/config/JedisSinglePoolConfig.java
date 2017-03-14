@@ -1,7 +1,5 @@
 package com.cacheproxy.client.redisclient.config;
 
-import java.io.Serializable;
-
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
 
@@ -11,7 +9,7 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
  * @emial  lijiaqiya@163.com
  * @date 2017-3-13
  */
-public class JedisSinglePoolConfig extends GenericObjectPoolConfig implements Serializable{
+public class JedisSinglePoolConfig extends GenericObjectPoolConfig implements Config{
 	
 	
 	private static final long serialVersionUID = 1L;
