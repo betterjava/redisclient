@@ -10,7 +10,7 @@ import redis.clients.jedis.ShardedJedisPipeline;
 import redis.clients.util.ShardInfo;
 
 /**
- * @desc
+ * @desc jedis 代理类
  * @author liya
  * @emial lijiaqiya@163.com
  * @date 2017-3-14

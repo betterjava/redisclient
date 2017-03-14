@@ -25,6 +25,11 @@ public class MethdoInvokeAuthUtil {
 	private static Collection<String> jedisMethods = Collections.unmodifiableCollection(initMethods(Jedis.class));
 	private static Collection<String> shardedJedisMethods = Collections.unmodifiableCollection(initMethods(ShardedJedis.class));
 
+	/**
+	 * 是否可以调用
+	 * @param method
+	 * @return
+	 */
 	public static boolean canInvoke(Method method) {
 		
 		boolean shareded = JedisConfig.getInstance().getConfigType().isShareded();

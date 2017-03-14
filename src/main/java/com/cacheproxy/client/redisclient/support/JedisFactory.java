@@ -9,10 +9,8 @@ import redis.clients.util.Pool;
 import com.cacheproxy.client.redisclient.config.Config;
 import com.cacheproxy.client.redisclient.config.ConfigType;
 import com.cacheproxy.client.redisclient.config.JedisConfig;
-import com.cacheproxy.client.redisclient.config.JedisConfigGson;
 import com.cacheproxy.client.redisclient.config.JedisSinglePoolConfig;
 import com.cacheproxy.client.redisclient.pool.extend.JedisMasterSlavePool;
-import com.google.gson.Gson;
 
 /**
  * @desc jedis 对象池工厂
@@ -44,7 +42,8 @@ public class JedisFactory {
 		case JedisSingle:
 			JedisSinglePoolConfig singleConfig = (JedisSinglePoolConfig) config;
 			return new JedisPool(singleConfig,singleConfig.getHost(),singleConfig.getPort());
-			// TODO
+		case JedisSentinel:
+			
 		default:
 			break;
 		}

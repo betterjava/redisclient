@@ -5,7 +5,7 @@ import com.cacheproxy.client.redisclient.support.JedisProxyInteceptor;
 import net.sf.cglib.proxy.Enhancer;
 
 /**
- * @desc jedis 工厂类
+ * @desc jedis代理  工厂类
  * @author liya
  * @emial lijiaqiya@163.com
  * @date 2017-3-13

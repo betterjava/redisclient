@@ -9,7 +9,9 @@ import java.util.Set;
 import org.junit.Test;
 
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisSentinelPool;
 import redis.clients.jedis.ShardedJedis;
+import redis.clients.util.Pool;
 
 import com.cacheproxy.client.redisclient.JedisProxyFactory;
 import com.cacheproxy.client.redisclient.JedisProxy;
@@ -86,10 +88,12 @@ public class TestJedisClient {
 		shardedJedis.getShardInfo("ss");//Sharded
 		shardedJedis.getShardInfo(new byte[1]);
 		shardedJedis.getKeyTag("d");//getShard
-		
-		
 	}
 	
+	@Test
+	public void testShaobing(){
+//		JedisSentinelPool pool = new JedisSentinelPool(masterName, sentinels, poolConfig, connectionTimeout, soTimeout, password, database, clientName)
+	}
 	
 	
 }

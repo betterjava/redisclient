@@ -23,8 +23,7 @@ public class JedisConfig {
 	private static JedisConfig initJedisConfig() {
 		// 进行异常处理，文件找不到等等 TODO
 
-		JedisConfigGson jedisCofnigGson = JedisConfigGson
-				.loadConfig("jedis.json");
+		JedisConfigGson jedisCofnigGson = JedisConfigGson.loadConfig("jedis.json");
 
 		ConfigType configType = ConfigType.valueOf(jedisCofnigGson.getConfigType());
 		JedisConfig jedisConfig = new JedisConfig();
