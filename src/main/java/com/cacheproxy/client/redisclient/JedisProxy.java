@@ -3,6 +3,8 @@ package com.cacheproxy.client.redisclient;
 import java.util.Collection;
 import java.util.List;
 
+import com.cacheproxy.client.redisclient.support.ShardedJedisMoreMethod;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.ShardedJedisPipeline;
 import redis.clients.util.ShardInfo;

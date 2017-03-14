@@ -1,5 +1,7 @@
 package com.cacheproxy.client.redisclient;
 
+import com.cacheproxy.client.redisclient.support.JedisProxyInteceptor;
+
 import net.sf.cglib.proxy.Enhancer;
 
 /**
@@ -8,7 +10,7 @@ import net.sf.cglib.proxy.Enhancer;
  * @emial lijiaqiya@163.com
  * @date 2017-3-13
  */
-public class JedisFactory {
+public class JedisProxyFactory {
 
 	private static JedisProxy jedis = initJedisProxy();
 

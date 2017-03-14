@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Random;
 
-import com.cacheproxy.client.redisclient.WriteReadJudge;
+import com.cacheproxy.client.redisclient.support.WriteReadJudge;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;

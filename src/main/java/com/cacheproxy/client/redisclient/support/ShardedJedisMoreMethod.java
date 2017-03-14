@@ -1,4 +1,4 @@
-package com.cacheproxy.client.redisclient;
+package com.cacheproxy.client.redisclient.support;
 
 import java.util.Collection;
 import java.util.List;

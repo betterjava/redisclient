@@ -11,7 +11,7 @@ import org.junit.Test;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.ShardedJedis;
 
-import com.cacheproxy.client.redisclient.JedisFactory;
+import com.cacheproxy.client.redisclient.JedisProxyFactory;
 import com.cacheproxy.client.redisclient.JedisProxy;
 
 /**
@@ -22,7 +22,7 @@ import com.cacheproxy.client.redisclient.JedisProxy;
  */
 public class TestJedisClient {
 
-	private static JedisProxy jedis = JedisFactory.getJedisProxy();
+	private static JedisProxy jedis = JedisProxyFactory.getJedisProxy();
 
 	@Test
 	public void testjeds() {
