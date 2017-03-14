@@ -1,8 +1,10 @@
-package com.cacheproxy.client.redisclient;
+package com.cacheproxy.client.redisclient.pool.extend;
 
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Random;
+
+import com.cacheproxy.client.redisclient.WriteReadJudge;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;

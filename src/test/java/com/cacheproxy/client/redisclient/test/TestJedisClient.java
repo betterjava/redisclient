@@ -54,11 +54,11 @@ public class TestJedisClient {
 			String pre = methodStr.substring(0, methodStr.lastIndexOf("("));
 			// System.out.println(pre);
 			String pp = pre.substring(0, pre.lastIndexOf("."));
-			// System.out.println(methodStr.substring(pp.length()+1));
+			 System.out.println(methodStr.substring(pp.length()+1));
 			methodOtherList.add(methodStr.substring(pp.length() + 1));
 		}
 		
-		printListDiff(methodList,methodOtherList);
+//		printListDiff(methodList,methodOtherList);
 	}
 
 	private void printListDiff(List<String> methodList,List<String> methodOtherList) {

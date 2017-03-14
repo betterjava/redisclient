@@ -26,7 +26,7 @@ public class JedisConfig {
 		JedisConfigGson jedisCofnigGson = JedisConfigGson
 				.loadConfig("jedis.json");
 
-		ConfigType configType = ConfigType.valueOf(jedisCofnigGson.getConfig());
+		ConfigType configType = ConfigType.valueOf(jedisCofnigGson.getConfigType());
 		JedisConfig jedisConfig = new JedisConfig();
 		Gson gson = new Gson();
 		switch (configType) {
