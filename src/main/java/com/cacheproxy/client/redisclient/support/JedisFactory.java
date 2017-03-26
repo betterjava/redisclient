@@ -23,27 +23,29 @@ public class JedisFactory {
 	private static Pool<?> jedisPool = initJedisPool();
 
 	public static Closeable getJedis(Method method) {
-		if (JedisConfig.getInstance().getConfigType().equals(ConfigType.JedisMasterSlave)) {
-			
+		if (JedisConfig.getInstance().getConfigType()
+				.equals(ConfigType.JedisMasterSlave)) {
+
 			return ((JedisMasterSlavePool) jedisPool).getResource(method);
 		}
 		return (Closeable) jedisPool.getResource();
 	}
 
-	
 	private static Pool<?> initJedisPool() {
-		
+
 		JedisConfig jedisConfig = JedisConfig.getInstance();
 		ConfigType configType = jedisConfig.getConfigType();
 		Config config = jedisConfig.getConfig();
-		
+
 		switch (configType) {
-		
+
 		case JedisSingle:
 			JedisSinglePoolConfig singleConfig = (JedisSinglePoolConfig) config;
-			return new JedisPool(singleConfig,singleConfig.getHost(),singleConfig.getPort());
+			return new JedisPool(singleConfig, singleConfig.getHost(),
+					singleConfig.getPort(), singleConfig.getTimeout(),
+					singleConfig.getPassword(), singleConfig.getDatabase(),
+					singleConfig.getClientName(), singleConfig.isSsl());
 		case JedisSentinel:
-			
 		default:
 			break;
 		}

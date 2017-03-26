@@ -50,6 +50,7 @@ public class JedisConfig {
 			jedisConfig.setConfig(gson.fromJson(jedisCofnigGson.getConfig(), ShardedJedisSentinelPoolConfig.class));
 			return jedisConfig;
 		}
+		// TODO
 		throw new RuntimeException("");
 	}
 

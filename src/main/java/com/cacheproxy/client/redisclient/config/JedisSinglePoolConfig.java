@@ -1,8 +1,5 @@
 package com.cacheproxy.client.redisclient.config;
 
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
-
-import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Protocol;
 
@@ -19,6 +16,10 @@ public class JedisSinglePoolConfig extends JedisPoolConfig implements Config {
 	private String host = Protocol.DEFAULT_HOST;
 	private int port = Protocol.DEFAULT_PORT;
 	private int database = Protocol.DEFAULT_DATABASE;
+	private int timeout = Protocol.DEFAULT_TIMEOUT;
+	private String password = null;
+	private String clientName = null;
+	private boolean ssl = false;
 	
 	public void setHost(String host) {
 		this.host = host;
@@ -44,4 +45,35 @@ public class JedisSinglePoolConfig extends JedisPoolConfig implements Config {
 		this.database = database;
 	}
 
+	public int getTimeout() {
+		return timeout;
+	}
+
+	public void setTimeout(int timeout) {
+		this.timeout = timeout;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public boolean isSsl() {
+		return ssl;
+	}
+
+	public void setSsl(boolean ssl) {
+		this.ssl = ssl;
+	}
+
+	public String getClientName() {
+		return clientName;
+	}
+
+	public void setClientName(String clientName) {
+		this.clientName = clientName;
+	}
 }
