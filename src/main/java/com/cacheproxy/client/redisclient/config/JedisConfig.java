@@ -39,7 +39,7 @@ public class JedisConfig {
 			return jedisConfig;
 		case ShardedJedis:
 			jedisConfig.setConfigType(ConfigType.ShardedJedis);
-			jedisConfig.setConfig(gson.fromJson(jedisCofnigGson.getConfig(), ShardedJedisPoolConfig.class));
+			jedisConfig.setConfig(gson.fromJson(jedisCofnigGson.getConfig(), ShardedJedisSinglePoolConfig.class));
 			return jedisConfig;
 		case ShardedJedisSentinel:
 			jedisConfig.setConfigType(ConfigType.ShardedJedisSentinel);
