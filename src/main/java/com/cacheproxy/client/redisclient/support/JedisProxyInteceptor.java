@@ -28,7 +28,7 @@ public class JedisProxyInteceptor implements MethodInterceptor {
 
 		Closeable closeAble = null;
 		try {
-			closeAble = JedisFactory.getJedis(method);
+			closeAble = JedisFactory.getJedis();
 			return method.invoke(closeAble, args);
 		} finally {
 			if (closeAble != null) {

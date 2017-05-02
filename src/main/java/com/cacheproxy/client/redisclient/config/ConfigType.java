@@ -9,7 +9,6 @@ package com.cacheproxy.client.redisclient.config;
 public enum ConfigType {
 	JedisSingle(false),				// 单个模式 
 	JedisSentinel(false),			// 哨兵模式
-	JedisMasterSlave(false),		// 主从模式
 	ShardedJedis(true),				// 分片模式
 	ShardedJedisSentinel(true);		// 分片哨兵模式
 	

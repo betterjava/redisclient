@@ -10,7 +10,6 @@ import com.cacheproxy.client.redisclient.config.Config;
 import com.cacheproxy.client.redisclient.config.ConfigType;
 import com.cacheproxy.client.redisclient.config.JedisConfig;
 import com.cacheproxy.client.redisclient.config.JedisSinglePoolConfig;
-import com.cacheproxy.client.redisclient.pool.extend.JedisMasterSlavePool;
 
 /**
  * @desc jedis 对象池工厂
@@ -22,12 +21,7 @@ public class JedisFactory {
 
 	private static Pool<?> jedisPool = initJedisPool();
 
-	public static Closeable getJedis(Method method) {
-		if (JedisConfig.getInstance().getConfigType()
-				.equals(ConfigType.JedisMasterSlave)) {
-
-			return ((JedisMasterSlavePool) jedisPool).getResource(method);
-		}
+	public static Closeable getJedis() {
 		return (Closeable) jedisPool.getResource();
 	}
 

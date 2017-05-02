@@ -16,6 +16,7 @@ import org.junit.Test;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisSentinelPool;
+import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.util.JedisURIHelper;
 
@@ -34,7 +35,7 @@ public class TestJedisClient {
 
 	@Test
 	public void testjeds() {
-//		jedis.getShard("cookie");
+		
 		while (true) {
 			jedis.set("cookie", "woshishui");
 			System.out.println(jedis.get("cookie"));
