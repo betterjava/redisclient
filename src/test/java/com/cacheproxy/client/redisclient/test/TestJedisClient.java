@@ -11,11 +11,7 @@ import org.junit.Test;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.ShardedJedis;
-
-import com.cacheproxy.client.redisclient.JedisProxy;
-import com.cacheproxy.client.redisclient.JedisProxyFactory;
 
 /**
  * @desc
@@ -25,14 +21,11 @@ import com.cacheproxy.client.redisclient.JedisProxyFactory;
  */
 public class TestJedisClient {
 
-	private static JedisProxy jedis = JedisProxyFactory.getJedisProxy();
 
 	@Test
 	public void testjeds() {
 		
 		while (true) {
-			jedis.set("cookie", "woshishui");
-			System.out.println(jedis.get("cookie"));
 		}
 	}
 
@@ -117,15 +110,5 @@ public class TestJedisClient {
 	}
 	@Test
 	public void testPipeline() throws IOException{
-		Pipeline xx = jedis.pipelined();
-		
-		int i = 0;
-		
-		while(i<908){
-			xx.set("cookie", i++ +"");
-			
-		}
-		xx.sync();
-		
 	}
 }

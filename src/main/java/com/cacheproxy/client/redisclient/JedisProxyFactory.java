@@ -11,19 +11,19 @@ import com.cacheproxy.client.redisclient.support.AbstractJedisProxyFactory;
 public class JedisProxyFactory extends AbstractJedisProxyFactory{
 	
 	
-	public JedisProxy createJedisProxy(){
+	public static JedisProxy createJedisProxy(){
 		return initJedisProxy(DEFAULT_CONFIG_PROPERTIES);
 	}
 	
-	public JedisProxy createJedisProxy(String configProperties) {
+	public static JedisProxy createJedisProxy(String configProperties) {
 		return initJedisProxy(configProperties);
 	}
 	
-	public ShardedJedisProxy createShardedJedisProxy(){
+	public static ShardedJedisProxy createShardedJedisProxy(){
 		return initShardedJedisProxy(DEFAULT_CONFIG_PROPERTIES);
 	}
 	
-	public ShardedJedisProxy createShardedJedisProxy(String configProperties){
+	public static ShardedJedisProxy createShardedJedisProxy(String configProperties){
 		return initShardedJedisProxy(configProperties);
 	}
 	

@@ -1,5 +1,7 @@
 package com.cacheproxy.client.redisclient.config;
 
+import java.io.Serializable;
+
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Protocol;
 
@@ -9,7 +11,7 @@ import redis.clients.jedis.Protocol;
  * @emial lijiaqiya@163.com
  * @date 2017-3-13
  */
-public class JedisSinglePoolConfig extends JedisPoolConfig implements Config {
+public class JedisSinglePoolConfig extends JedisPoolConfig implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

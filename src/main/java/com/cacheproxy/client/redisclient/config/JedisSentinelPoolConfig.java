@@ -1,8 +1,7 @@
 package com.cacheproxy.client.redisclient.config;
 
+import java.io.Serializable;
 import java.util.Set;
-
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Protocol;
@@ -13,14 +12,13 @@ import redis.clients.jedis.Protocol;
  * @emial  lijiaqiya@163.com
  * @date 2017-3-13
  */
-public class JedisSentinelPoolConfig extends JedisPoolConfig implements Config{
+public class JedisSentinelPoolConfig extends JedisPoolConfig implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	private String masterName;
 	private Set<String> sentinels ;
-	private int connectionTimeout = Protocol.DEFAULT_TIMEOUT;
-	private int soTimeout = Protocol.DEFAULT_TIMEOUT;
+	private int timeout = Protocol.DEFAULT_TIMEOUT;
 	private String password = null;
 	private int database = Protocol.DEFAULT_DATABASE;
 	private String clientName = null;
@@ -37,17 +35,13 @@ public class JedisSentinelPoolConfig extends JedisPoolConfig implements Config{
 	public void setSentinels(Set<String> sentinels) {
 		this.sentinels = sentinels;
 	}
-	public int getConnectionTimeout() {
-		return connectionTimeout;
+	
+	public int getTimeout() {
+		return timeout;
 	}
-	public void setConnectionTimeout(int connectionTimeout) {
-		this.connectionTimeout = connectionTimeout;
-	}
-	public int getSoTimeout() {
-		return soTimeout;
-	}
-	public void setSoTimeout(int soTimeout) {
-		this.soTimeout = soTimeout;
+	
+	public void setTimeout(int timeout) {
+		this.timeout = timeout;
 	}
 	public String getPassword() {
 		return password;
@@ -67,8 +61,6 @@ public class JedisSentinelPoolConfig extends JedisPoolConfig implements Config{
 	public void setClientName(String clientName) {
 		this.clientName = clientName;
 	}
-
-	
 }
 
 

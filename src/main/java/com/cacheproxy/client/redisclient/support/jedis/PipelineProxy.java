@@ -22,14 +22,12 @@ public class PipelineProxy extends Pipeline {
 	public void sync() {
 		super.sync();
 		jedis.close();
-		System.out.println("PipelineProxy 释放连接。。。");
 	}
 
 	@Override
 	public List<Object> syncAndReturnAll() {
 		List<Object> result = super.syncAndReturnAll();
 		jedis.close();
-		System.out.println("PipelineProxy 释放连接。。。");
 		return result;
 	}
 }

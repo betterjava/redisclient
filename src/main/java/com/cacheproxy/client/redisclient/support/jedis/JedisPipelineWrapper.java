@@ -2,7 +2,6 @@ package com.cacheproxy.client.redisclient.support.jedis;
 
 import java.util.List;
 
-
 import redis.clients.jedis.BinaryJedis;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
