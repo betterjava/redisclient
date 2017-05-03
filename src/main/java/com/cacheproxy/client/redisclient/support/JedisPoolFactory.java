@@ -42,8 +42,8 @@ public class JedisPoolFactory {
 		case JedisSentinel:
 			JedisSentinelPoolConfig sentinelPoolConfig = new JedisSentinelPoolConfig();
 			PropertiesUtils.setProperties(sentinelPoolConfig,properties);
-			return new JedisSentinelPool(sentinelPoolConfig.getMasterName(),
-					sentinelPoolConfig.getSentinels(), sentinelPoolConfig,
+			return new JedisSentinelPool(sentinelPoolConfig.getMaster(),
+					sentinelPoolConfig.getSentinelSet(), sentinelPoolConfig,
 					sentinelPoolConfig.getTimeout(),
 					sentinelPoolConfig.getTimeout(),
 					sentinelPoolConfig.getPassword(),
@@ -53,13 +53,13 @@ public class JedisPoolFactory {
 			ShardedJedisSinglePoolConfig shardedJedisSinglePoolConfig = new ShardedJedisSinglePoolConfig();
 			PropertiesUtils.setProperties(shardedJedisSinglePoolConfig,properties);
 			return new ShardedJedisPool(shardedJedisSinglePoolConfig,
-					shardedJedisSinglePoolConfig.getShards());
+					shardedJedisSinglePoolConfig.getShardList());
 		case ShardedJedisSentinel:
 			ShardedJedisSentinelPoolConfig shardedJedisSentinelPoolConfig = new ShardedJedisSentinelPoolConfig();
 			PropertiesUtils.setProperties(shardedJedisSentinelPoolConfig,properties);
 			return new ShardedJedisSentinelPool(
-					shardedJedisSentinelPoolConfig.getMasters(),
-					shardedJedisSentinelPoolConfig.getSentinels(),
+					shardedJedisSentinelPoolConfig.getMasterList(),
+					shardedJedisSentinelPoolConfig.getSentinelSet(),
 					shardedJedisSentinelPoolConfig,
 					shardedJedisSentinelPoolConfig.getTimeout(),
 					shardedJedisSentinelPoolConfig.getPassword(),

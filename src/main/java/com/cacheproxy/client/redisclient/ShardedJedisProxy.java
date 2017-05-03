@@ -1,6 +1,6 @@
 package com.cacheproxy.client.redisclient;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import redis.clients.jedis.JedisShardInfo;
 import redis.clients.jedis.ShardedJedis;
@@ -12,7 +12,7 @@ import redis.clients.jedis.ShardedJedis;
  */
 public class ShardedJedisProxy extends ShardedJedis {
 
-	private ShardedJedisProxy(List<JedisShardInfo> shards) {
-		super(shards);
+	public ShardedJedisProxy(){
+		super(new ArrayList<JedisShardInfo>());
 	}
 }

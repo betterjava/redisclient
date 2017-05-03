@@ -55,7 +55,7 @@ public class ShardedJedisSentinelPoolConfig extends JedisPoolConfig implements S
 		this.timeout = timeout;
 	}
 
-	public List<String> getMasters() {
+	public List<String> getMasterList() {
 		if (StringUtils.isBlank(masters)) {
 			return null;
 		}
@@ -70,8 +70,20 @@ public class ShardedJedisSentinelPoolConfig extends JedisPoolConfig implements S
 	public void setMasters(String masters) {
 		this.masters = masters;
 	}
+	
+	public String getMasters() {
+		return masters;
+	}
+	
+	public String getSentinels() {
+		return sentinels;
+	}
+	
+	public void setSentinels(String sentinels) {
+		this.sentinels = sentinels;
+	}
 
-	public Set<String> getSentinels() {
+	public Set<String> getSentinelSet() {
 		if (StringUtils.isBlank(sentinels)) {
 			return null;
 		}

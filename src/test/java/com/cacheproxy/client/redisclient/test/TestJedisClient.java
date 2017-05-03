@@ -13,11 +13,13 @@ import org.slf4j.LoggerFactory;
 
 import com.cacheproxy.client.redisclient.JedisProxy;
 import com.cacheproxy.client.redisclient.JedisProxyFactory;
+import com.cacheproxy.client.redisclient.ShardedJedisProxy;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.ShardedJedis;
+import redis.clients.jedis.ShardedJedisPipeline;
 
 /**
  * @desc
@@ -27,10 +29,9 @@ import redis.clients.jedis.ShardedJedis;
  */
 public class TestJedisClient {
 
-
 	@Test
 	public void testjeds() {
-		
+
 		while (true) {
 		}
 	}
@@ -56,42 +57,43 @@ public class TestJedisClient {
 			String pre = methodStr.substring(0, methodStr.lastIndexOf("("));
 			// System.out.println(pre);
 			String pp = pre.substring(0, pre.lastIndexOf("."));
-			 System.out.println(methodStr.substring(pp.length()+1));
+			System.out.println(methodStr.substring(pp.length() + 1));
 			methodOtherList.add(methodStr.substring(pp.length() + 1));
 		}
-		
-//		printListDiff(methodList,methodOtherList);
+
+		// printListDiff(methodList,methodOtherList);
 	}
 
-	private void printListDiff(List<String> methodList,List<String> methodOtherList) {
-		for(String method:methodList){
-			if(!methodOtherList.contains(method)){
-				System.out.println("jedis more than shardedJedis :"+method);
+	private void printListDiff(List<String> methodList,
+			List<String> methodOtherList) {
+		for (String method : methodList) {
+			if (!methodOtherList.contains(method)) {
+				System.out.println("jedis more than shardedJedis :" + method);
 			}
 		}
-		
-		for(String method:methodOtherList){
-			if(!methodList.contains(method)){
-				System.out.println("shardedJedis."+method);
+
+		for (String method : methodOtherList) {
+			if (!methodList.contains(method)) {
+				System.out.println("shardedJedis." + method);
 			}
 		}
 	}
-	
+
 	@Test
-	public void testSO(){
+	public void testSO() {
 		ShardedJedis shardedJedis = null;
 		shardedJedis.pipelined(null);// BinaryShardedJedis
-		shardedJedis.getAllShardInfo();//Sharded
-		shardedJedis.getShard("cc");//Sharded
-		shardedJedis.getShard(new byte[1]);//Sharded
-		shardedJedis.getAllShards();//Sharded
-		shardedJedis.getShardInfo("ss");//Sharded
+		shardedJedis.getAllShardInfo();// Sharded
+		shardedJedis.getShard("cc");// Sharded
+		shardedJedis.getShard(new byte[1]);// Sharded
+		shardedJedis.getAllShards();// Sharded
+		shardedJedis.getShardInfo("ss");// Sharded
 		shardedJedis.getShardInfo(new byte[1]);
-		shardedJedis.getKeyTag("d");//getShard
+		shardedJedis.getKeyTag("d");// getShard
 	}
-	
+
 	@Test
-	public void testShaobing(){
+	public void testShaobing() {
 		GenericObjectPoolConfig poolConfig = null;
 		String host = null;
 		int port = 0;
@@ -102,9 +104,9 @@ public class TestJedisClient {
 		boolean ssl = false;
 		new JedisPool(poolConfig, host, port);
 	}
-	
+
 	@Test
-	public void estshaobing(){
+	public void estshaobing() {
 		String masterName;
 		Set<String> sentinels;
 		GenericObjectPoolConfig poolConfig;
@@ -114,22 +116,23 @@ public class TestJedisClient {
 		int database;
 		String clientName;
 	}
+
 	@Test
-	public void testPipeline() throws IOException{
+	public void testPipeline() throws IOException {
 	}
-	
+
 	@Test
-	public void testJedisPool(){
+	public void testJedisPool() {
 		JedisProxy jedisProxy = JedisProxyFactory.createJedisProxy();
 		String key = "cookie";
 		String value = "jlkjllk";
 		jedisProxy.set(key, value);
 		System.out.println(jedisProxy.get(key));
 	}
-	
+
 	@Test
-	public void testJedisPooPipe(){
-		
+	public void testJedisPooPipe() {
+
 		Logger logger = LoggerFactory.getLogger(TestJedisClient.class);
 		System.out.println(logger.isDebugEnabled());
 		System.out.println(logger.isInfoEnabled());
@@ -144,16 +147,20 @@ public class TestJedisClient {
 		pi.get(key);
 		List<Object> list = pi.syncAndReturnAll();
 		System.out.println(list);
-		
+
 	}
-	
+
 	@Test
-	public void testJedisPooPipe1(){
-		
-		JedisProxy jedisProxy = JedisProxyFactory.createJedisProxy();
+	public void testJedisPooPipe1() {
+
+		ShardedJedisProxy shardedJedisProxy = JedisProxyFactory.createShardedJedisProxy("myredis.properties");
 		int i = 0;
-		while(true){
-			jedisProxy.set("cookie", i+++"");
+		while (true) {
+			ShardedJedisPipeline pi = shardedJedisProxy.pipelined();
+			pi.set("cookie", i++ + "");
+			pi.sync();
+			// shardedJedisProxy.set("cookie100", i+++"");
 		}
+
 	}
 }

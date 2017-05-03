@@ -1,7 +1,11 @@
 package com.cacheproxy.client.redisclient.config;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import org.apache.commons.lang3.StringUtils;
 
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Protocol;
@@ -16,24 +20,38 @@ public class JedisSentinelPoolConfig extends JedisPoolConfig implements Serializ
 
 	private static final long serialVersionUID = 1L;
 	
-	private String masterName;
-	private Set<String> sentinels ;
+	private String master;
+	private String sentinels ;
 	private int timeout = Protocol.DEFAULT_TIMEOUT;
 	private String password = null;
 	private int database = Protocol.DEFAULT_DATABASE;
 	private String clientName = null;
 	
-	public String getMasterName() {
-		return masterName;
+	public Set<String> getSentinelSet() {
+		if (StringUtils.isBlank(sentinels)) {
+			return null;
+		}
+		Set<String> sentinelList = new HashSet<>();
+		String[] arr = sentinels.split(",");
+		for (String master : arr) {
+			sentinelList.add(master.trim());
+		}
+		return sentinelList;
 	}
-	public void setMasterName(String masterName) {
-		this.masterName = masterName;
-	}
-	public Set<String> getSentinels() {
+	
+	public String getSentinels() {
 		return sentinels;
 	}
-	public void setSentinels(Set<String> sentinels) {
+	public void setSentinels(String sentinels) {
 		this.sentinels = sentinels;
+	}
+	
+	public String getMaster() {
+		return master;
+	}
+	
+	public void setMaster(String master) {
+		this.master = master;
 	}
 	
 	public int getTimeout() {
