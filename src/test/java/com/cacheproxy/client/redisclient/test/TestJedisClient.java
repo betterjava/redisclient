@@ -117,6 +117,15 @@ public class TestJedisClient {
 	}
 	@Test
 	public void testPipeline() throws IOException{
+		Pipeline xx = jedis.pipelined();
+		
+		int i = 0;
+		
+		while(i<908){
+			xx.set("cookie", i++ +"");
+			
+		}
+		xx.sync();
 		
 	}
 }

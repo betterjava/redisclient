@@ -1,6 +1,6 @@
 package com.cacheproxy.client.redisclient;
 
-import com.cacheproxy.client.redisclient.support.JedisProxyInteceptor;
+import com.cacheproxy.client.redisclient.support.jedis.JedisProxyInteceptor;
 
 import net.sf.cglib.proxy.Enhancer;
 
@@ -16,6 +16,8 @@ public class JedisProxyFactory {
 
 	/**
 	 * 获取 jedisproxy
+	 * 
+	 * 
 	 * 
 	 * @return
 	 */

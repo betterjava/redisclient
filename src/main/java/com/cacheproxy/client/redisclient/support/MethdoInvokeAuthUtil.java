@@ -1,17 +1,6 @@
 package com.cacheproxy.client.redisclient.support;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.ShardedJedis;
-
-import com.cacheproxy.client.redisclient.config.JedisConfig;
 
 /**
  * @desc
