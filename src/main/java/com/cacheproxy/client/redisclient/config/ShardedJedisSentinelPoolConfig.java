@@ -1,8 +1,12 @@
 package com.cacheproxy.client.redisclient.config;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.commons.lang3.StringUtils;
 
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Protocol;
@@ -15,9 +19,10 @@ import redis.clients.jedis.Protocol;
  */
 public class ShardedJedisSentinelPoolConfig extends JedisPoolConfig implements Serializable{
 
-	/**
-	 * 
-	 */
+	private String masters;
+	
+	private String sentinels;
+	
 	private static final long serialVersionUID = 1L;
 
 	private int timeout = Protocol.DEFAULT_TIMEOUT;
@@ -51,11 +56,30 @@ public class ShardedJedisSentinelPoolConfig extends JedisPoolConfig implements S
 	}
 
 	public List<String> getMasters() {
-		return null;
+		if (StringUtils.isBlank(masters)) {
+			return null;
+		}
+		List<String> masterList = new ArrayList<>();
+		String[] arr = masters.split(",");
+		for (String master : arr) {
+			masterList.add(master.trim());
+		}
+		return masterList;
+	}
+	
+	public void setMasters(String masters) {
+		this.masters = masters;
 	}
 
 	public Set<String> getSentinels() {
-		return null;
+		if (StringUtils.isBlank(sentinels)) {
+			return null;
+		}
+		Set<String> sentinelList = new HashSet<>();
+		String[] arr = sentinels.split(",");
+		for (String master : arr) {
+			sentinelList.add(master.trim());
+		}
+		return sentinelList;
 	}
-
 }

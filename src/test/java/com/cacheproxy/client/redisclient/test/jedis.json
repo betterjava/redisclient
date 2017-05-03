@@ -1,4 +1,0 @@
-{
-    "configType": "JedisSingle",
-    "config": "{'host':'10.1.200.144','port':6379}"
-}

@@ -26,7 +26,7 @@ public class PropertiesUtils {
 			properties.load(in);
 			return properties;
 		} catch (IOException e) {
-			LOGGER.error(e.getMessage(), e);
+			LOGGER.error("读取配置文件出错", e);
 			throw new RuntimeException(e);
 		}
 	}

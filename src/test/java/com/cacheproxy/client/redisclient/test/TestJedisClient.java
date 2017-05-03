@@ -8,9 +8,15 @@ import java.util.Set;
 
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.cacheproxy.client.redisclient.JedisProxy;
+import com.cacheproxy.client.redisclient.JedisProxyFactory;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.ShardedJedis;
 
 /**
@@ -110,5 +116,44 @@ public class TestJedisClient {
 	}
 	@Test
 	public void testPipeline() throws IOException{
+	}
+	
+	@Test
+	public void testJedisPool(){
+		JedisProxy jedisProxy = JedisProxyFactory.createJedisProxy();
+		String key = "cookie";
+		String value = "jlkjllk";
+		jedisProxy.set(key, value);
+		System.out.println(jedisProxy.get(key));
+	}
+	
+	@Test
+	public void testJedisPooPipe(){
+		
+		Logger logger = LoggerFactory.getLogger(TestJedisClient.class);
+		System.out.println(logger.isDebugEnabled());
+		System.out.println(logger.isInfoEnabled());
+		logger.debug("dfdddd");
+		logger.info("dfdf");
+		JedisProxy jedisProxy = JedisProxyFactory.createJedisProxy();
+		jedisProxy.set("cookie", "jklsjgklsg");
+		Pipeline pi = jedisProxy.pipelined();
+		String key = "cookie";
+		String value = "10000";
+		pi.set(key, value);
+		pi.get(key);
+		List<Object> list = pi.syncAndReturnAll();
+		System.out.println(list);
+		
+	}
+	
+	@Test
+	public void testJedisPooPipe1(){
+		
+		JedisProxy jedisProxy = JedisProxyFactory.createJedisProxy();
+		int i = 0;
+		while(true){
+			jedisProxy.set("cookie", i+++"");
+		}
 	}
 }
