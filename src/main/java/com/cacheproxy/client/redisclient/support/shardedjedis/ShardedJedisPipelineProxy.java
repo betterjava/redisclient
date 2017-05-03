@@ -22,7 +22,6 @@ public class ShardedJedisPipelineProxy extends ShardedJedisPipeline {
 	public void sync() {
 		super.sync();
 		shardedJedis.close();
-
 	}
 
 	@Override

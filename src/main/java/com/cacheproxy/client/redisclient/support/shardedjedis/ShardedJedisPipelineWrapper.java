@@ -1,5 +1,6 @@
 package com.cacheproxy.client.redisclient.support.shardedjedis;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,7 +19,7 @@ public class ShardedJedisPipelineWrapper extends BinaryShardedJedis {
 	private ShardedJedis shardedJedis;
 
 	public ShardedJedisPipelineWrapper(List<JedisShardInfo> shards) {
-		super(shards);
+		super(new ArrayList<JedisShardInfo>());
 	}
 
 	@Override

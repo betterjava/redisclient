@@ -1,12 +1,13 @@
-package com.cacheproxy.client.redisclient.support.jedis;
+package com.cacheproxy.client.redisclient.support;
 
 import java.io.Closeable;
 import java.lang.reflect.Method;
 
-import com.cacheproxy.client.redisclient.support.JedisFactory;
-import com.cacheproxy.client.redisclient.support.MethdoInvokeAuthUtil;
+import com.cacheproxy.client.redisclient.support.jedis.JedisPipelineWrapper;
+import com.cacheproxy.client.redisclient.support.shardedjedis.ShardedJedisPipelineWrapper;
 
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.ShardedJedis;
 
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
@@ -23,29 +24,26 @@ public class JedisProxyInteceptor implements MethodInterceptor {
 	public Object intercept(Object obj, Method method, Object[] args,
 			MethodProxy proxy) throws Throwable {
 
-		// boolean canInvoke = MethdoInvokeAuthUtil.canInvoke(method);
-		// if (!canInvoke) {
-		// throw new
-		// UnsupportedOperationException("this method can not be supported in model : "
-		// + JedisConfig.getInstance().getConfigType());
-		// }
-
 		Closeable closeAble = null;
 		boolean isPipeline = false;
 		try {
 			isPipeline = MethdoInvokeAuthUtil.isPipeline(method);
+			
 			closeAble = JedisFactory.getJedis();
-			System.out.println("获取。。。");
-			if (isPipeline) {
-
-				JedisPipelineWrapper wrapper = new JedisPipelineWrapper((Jedis) closeAble);
-				return method.invoke(wrapper, args);
+			
+			if(!isPipeline){
+				return method.invoke(closeAble, args);
 			}
-			return method.invoke(closeAble, args);
+			if(closeAble instanceof Jedis){
+				return method.invoke(new JedisPipelineWrapper((Jedis) closeAble), args);
+			}else{
+				ShardedJedisPipelineWrapper pipelineWrapper = new ShardedJedisPipelineWrapper(null);
+				pipelineWrapper.setShardedJedis((ShardedJedis) closeAble);
+				return method.invoke(pipelineWrapper, args);
+			}
 		} finally {
 			if (closeAble != null && !isPipeline) {
 				closeAble.close();
-				System.out.println("释放连接。。。");
 			}
 		}
 	}
