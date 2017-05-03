@@ -1,7 +1,6 @@
 package com.cacheproxy.client.redisclient;
 
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.Pipeline;
 
 /**
  * @desc jedis 代理类

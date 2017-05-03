@@ -3,14 +3,14 @@ package com.cacheproxy.client.redisclient.support;
 import java.io.Closeable;
 import java.lang.reflect.Method;
 
-import com.cacheproxy.client.redisclient.support.jedis.JedisPipelineWrapper;
-import com.cacheproxy.client.redisclient.support.shardedjedis.ShardedJedisPipelineWrapper;
-
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.ShardedJedis;
-
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.ShardedJedis;
+import redis.clients.util.Pool;
+
+import com.cacheproxy.client.redisclient.support.jedis.JedisPipelineWrapper;
+import com.cacheproxy.client.redisclient.support.shardedjedis.ShardedJedisPipelineWrapper;
 
 /**
  * @desc 代理类管理器
@@ -19,6 +19,16 @@ import net.sf.cglib.proxy.MethodProxy;
  * @date 2017-3-13
  */
 public class JedisProxyInteceptor implements MethodInterceptor {
+	
+	private  Pool<?> jedisPool;
+	
+	public JedisProxyInteceptor(String configProperties){
+		initJedisPool(configProperties);
+	}
+	
+	private void initJedisPool(String configProperties) {
+		jedisPool = JedisPoolFactory.initJedisPool(configProperties);
+	}
 
 	@Override
 	public Object intercept(Object obj, Method method, Object[] args,
@@ -29,7 +39,7 @@ public class JedisProxyInteceptor implements MethodInterceptor {
 		try {
 			isPipeline = MethdoInvokeAuthUtil.isPipeline(method);
 			
-			closeAble = JedisFactory.getJedis();
+			closeAble = (Closeable) jedisPool.getResource();
 			
 			if(!isPipeline){
 				return method.invoke(closeAble, args);

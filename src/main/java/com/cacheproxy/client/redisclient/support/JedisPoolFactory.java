@@ -16,15 +16,9 @@ import com.cacheproxy.client.redisclient.config.JedisSinglePoolConfig;
  * @emial lijiaqiya@163.com
  * @date 2017-3-13
  */
-public class JedisFactory {
+public class JedisPoolFactory {
 
-	private static Pool<?> jedisPool = initJedisPool();
-
-	public static Closeable getJedis() {
-		return (Closeable) jedisPool.getResource();
-	}
-
-	private static Pool<?> initJedisPool() {
+	public static Pool<?> initJedisPool(String configProperties) {
 
 		JedisConfig jedisConfig = JedisConfig.getInstance();
 		ConfigType configType = jedisConfig.getConfigType();

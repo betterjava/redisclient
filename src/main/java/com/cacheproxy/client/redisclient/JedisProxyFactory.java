@@ -1,8 +1,6 @@
 package com.cacheproxy.client.redisclient;
 
-import com.cacheproxy.client.redisclient.support.JedisProxyInteceptor;
-
-import net.sf.cglib.proxy.Enhancer;
+import com.cacheproxy.client.redisclient.support.AbstractJedisProxyFactory;
 
 /**
  * @desc jedis代理  工厂类
@@ -10,26 +8,23 @@ import net.sf.cglib.proxy.Enhancer;
  * @emial lijiaqiya@163.com
  * @date 2017-3-13
  */
-public class JedisProxyFactory {
-
-	private static JedisProxy jedis = initJedisProxy();
-
-	/**
-	 * 获取 jedisproxy
-	 * 
-	 * @return
-	 */
-	public static JedisProxy getJedisProxy() {
-		return jedis;
+public class JedisProxyFactory extends AbstractJedisProxyFactory{
+	
+	
+	public JedisProxy createJedisProxy(){
+		return initJedisProxy(DEFAULT_CONFIG_PROPERTIES);
 	}
-
-	private static JedisProxy initJedisProxy() {
-
-		Enhancer enhancer = new Enhancer();
-		// 设置需要创建子类的类
-		enhancer.setSuperclass(JedisProxy.class);
-		enhancer.setCallback(new JedisProxyInteceptor());
-		// 通过字节码技术动态创建子类实例
-		return (JedisProxy) enhancer.create();
+	
+	public JedisProxy createJedisProxy(String configProperties) {
+		return initJedisProxy(configProperties);
 	}
+	
+	public ShardedJedisProxy createShardedJedisProxy(){
+		return initShardedJedisProxy(DEFAULT_CONFIG_PROPERTIES);
+	}
+	
+	public ShardedJedisProxy createShardedJedisProxy(String configProperties){
+		return initShardedJedisProxy(configProperties);
+	}
+	
 }
