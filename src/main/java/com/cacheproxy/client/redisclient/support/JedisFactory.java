@@ -1,7 +1,6 @@
 package com.cacheproxy.client.redisclient.support;
 
 import java.io.Closeable;
-import java.lang.reflect.Method;
 
 import redis.clients.jedis.JedisPool;
 import redis.clients.util.Pool;

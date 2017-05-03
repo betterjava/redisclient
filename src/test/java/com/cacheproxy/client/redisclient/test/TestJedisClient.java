@@ -1,24 +1,18 @@
 package com.cacheproxy.client.redisclient.test;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLParameters;
-import javax.net.ssl.SSLSocketFactory;
 
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.junit.Test;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisSentinelPool;
 import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.ShardedJedis;
-import redis.clients.util.JedisURIHelper;
 
 import com.cacheproxy.client.redisclient.JedisProxy;
 import com.cacheproxy.client.redisclient.JedisProxyFactory;
@@ -120,5 +114,9 @@ public class TestJedisClient {
 		String password;
 		int database;
 		String clientName;
+	}
+	@Test
+	public void testPipeline() throws IOException{
+		
 	}
 }
