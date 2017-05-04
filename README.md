@@ -99,5 +99,38 @@ public void testShardJedisProxy(){
 说明：以事务操作为例子，虽然开始事务时获取连接，关闭事务时释放连接，但是如果发生异常使得关闭事务得不到执行，则连接就不会得到释放，所以需要手动加上try   finally 模块
 ##### 管道操作
 ```
+@Test
+public void testJedisProxyPipeline() {
+	// 可以将 此 jedisProxy 作为静态变量
+	// 默认从 redisclient.properties 加载配置，也可以自定义配置文件名称 JedisProxyFactory.createJedisProxy("my-redis.properties");
+	JedisProxy jedisProxy = JedisProxyFactory.createJedisProxy();
+	Pipeline pi = jedisProxy.pipelined();
+	try {
+		pi.set("cookie", "helloboy");
+		pi.get("cookie");
+		System.out.println(pi.syncAndReturnAll());
+	} catch (Exception e) {
+		// TODO: handle exception
+	}finally{
+		ReleaseUtil.realease(pi);
+	}
+}
 ```
 ##### 事务操作
+
+```
+@Test
+public void testTr(){
+	// 可以将 此 jedisProxy 作为静态变量
+	// 默认从 redisclient.properties 加载配置，也可以自定义配置文件名称 JedisProxyFactory.createJedisProxy("my-redis.properties");
+	JedisProxy jedisProxy = JedisProxyFactory.createJedisProxy();
+	Transaction tt = null;
+	try {
+		tt = jedisProxy.multi();
+		tt.set("cookie", "10000");
+		tt.exec();
+	} finally{
+		ReleaseUtil.realease(tt);
+	}
+}
+```
