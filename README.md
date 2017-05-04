@@ -68,6 +68,7 @@ maxTotal=10
 maxIdle=5
 ```
 
-## 特殊说明
+### 代码引用
 ---
-### 对于独占连接的操作，还是应当有try finally 模块
+#### 普通redis 命令
+#### 对于独占连接的操作，还是应当有try finally 模块
