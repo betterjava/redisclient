@@ -56,4 +56,16 @@ public class ShardedJedisPipelineProxy extends ShardedJedisPipeline {
 		
 		return result;
 	}
+	
+	public void release() {
+
+		if (!hasReturn.get()) {
+			shardedJedis.close();
+			hasReturn.set(true);
+
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("ShardedJedisPipelineProxy 释放 连接 ");
+			}
+		}
+	}
 }

@@ -11,6 +11,7 @@ import redis.clients.jedis.Transaction;
 import com.cacheproxy.client.redisclient.JedisProxy;
 import com.cacheproxy.client.redisclient.JedisProxyFactory;
 import com.cacheproxy.client.redisclient.ShardedJedisProxy;
+import com.cacheproxy.client.redisclient.support.ReleaseUtil;
 
 /**
  * @desc
@@ -39,7 +40,7 @@ public class TestJedisClient {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}finally{
-			pi.clear();
+			ReleaseUtil.realease(pi);
 		}
 		
 	}
@@ -69,7 +70,7 @@ public class TestJedisClient {
 			tt.set("cookie", "10000");
 			tt.exec();
 		} finally{
-			tt.clear();
+			ReleaseUtil.realease(tt);
 		}
 	}
 	
@@ -97,7 +98,7 @@ public class TestJedisClient {
 				pp.get("cookie");
 				System.out.println(pp.syncAndReturnAll());
 			} finally{
-				pp.clear();
+				ReleaseUtil.realease(pp);
 			}
 		}
 	}

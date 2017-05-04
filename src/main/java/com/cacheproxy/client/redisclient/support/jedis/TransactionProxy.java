@@ -79,4 +79,16 @@ public class TransactionProxy extends Transaction {
 		
 		return result;
 	}
+	
+	public void release() {
+
+		if (!hasReturn.get()) {
+			jedis.close();
+			hasReturn.set(true);
+
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("TransactionProxy 释放 连接 ");
+			}
+		}
+	}
 }
