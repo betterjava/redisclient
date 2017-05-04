@@ -1,4 +1,4 @@
-package com.cacheproxy.client.redisclient.support;
+package com.cacheproxy.client.redisclient;
 
 import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.ShardedJedisPipeline;

@@ -10,8 +10,8 @@ import redis.clients.jedis.Transaction;
 
 import com.cacheproxy.client.redisclient.JedisProxy;
 import com.cacheproxy.client.redisclient.JedisProxyFactory;
+import com.cacheproxy.client.redisclient.ReleaseUtil;
 import com.cacheproxy.client.redisclient.ShardedJedisProxy;
-import com.cacheproxy.client.redisclient.support.ReleaseUtil;
 
 /**
  * @desc
