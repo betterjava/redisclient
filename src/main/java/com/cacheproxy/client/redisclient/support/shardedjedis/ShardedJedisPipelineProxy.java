@@ -1,6 +1,7 @@
 package com.cacheproxy.client.redisclient.support.shardedjedis;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,8 @@ public class ShardedJedisPipelineProxy extends ShardedJedisPipeline {
 	private final static Logger LOGGER = LoggerFactory.getLogger(ShardedJedisPipelineProxy.class);
 
 	private ShardedJedis shardedJedis;
+	
+	private AtomicBoolean hasReturn = new AtomicBoolean();
 
 	public ShardedJedisPipelineProxy(ShardedJedis shardedJedis) {
 		this.shardedJedis = shardedJedis;
@@ -26,10 +29,14 @@ public class ShardedJedisPipelineProxy extends ShardedJedisPipeline {
 	@Override
 	public void sync() {
 		super.sync();
-		shardedJedis.close();
 		
-		if(LOGGER.isDebugEnabled()){
-			LOGGER.debug("ShardedJedisPipelineProxy 释放 连接 ");
+		if (!hasReturn.get()) {
+			shardedJedis.close();
+			hasReturn.set(true);
+			
+			if(LOGGER.isDebugEnabled()){
+				LOGGER.debug("ShardedJedisPipelineProxy 释放 连接 ");
+			}
 		}
 	}
 
@@ -37,10 +44,14 @@ public class ShardedJedisPipelineProxy extends ShardedJedisPipeline {
 	public List<Object> syncAndReturnAll() {
 
 		List<Object> result = super.syncAndReturnAll();
-		shardedJedis.close();
 		
-		if(LOGGER.isDebugEnabled()){
-			LOGGER.debug("ShardedJedisPipelineProxy 释放 连接 ");
+		if (!hasReturn.get()) {
+			shardedJedis.close();
+			hasReturn.set(true);
+			
+			if(LOGGER.isDebugEnabled()){
+				LOGGER.debug("ShardedJedisPipelineProxy 释放 连接 ");
+			}
 		}
 		
 		return result;

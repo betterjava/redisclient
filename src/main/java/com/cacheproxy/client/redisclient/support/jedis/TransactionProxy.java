@@ -1,6 +1,7 @@
 package com.cacheproxy.client.redisclient.support.jedis;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,8 @@ public class TransactionProxy extends Transaction {
 	private final static Logger LOGGER = LoggerFactory.getLogger(TransactionProxy.class);
 
 	private Jedis jedis;
+	
+	private AtomicBoolean hasReturn = new AtomicBoolean();
 
 	public TransactionProxy(Jedis jedis) {
 		super(jedis.getClient());
@@ -29,11 +32,16 @@ public class TransactionProxy extends Transaction {
 	public List<Object> exec() {
 		
 		List<Object> result = super.exec();
-		jedis.close();
 		
-		if(LOGGER.isDebugEnabled()){
-			LOGGER.debug("TransactionProxy 释放 redis 连接...");
+		if (!hasReturn.get()) {
+			jedis.close();
+			hasReturn.set(true);
+			
+			if(LOGGER.isDebugEnabled()){
+				LOGGER.debug("TransactionProxy 释放 redis 连接...");
+			}
 		}
+		
 		
 		return result;
 	}
@@ -42,10 +50,14 @@ public class TransactionProxy extends Transaction {
 	public List<Response<?>> execGetResponse() {
 		
 		List<Response<?>> result = super.execGetResponse();
-		jedis.close();
 		
-		if(LOGGER.isDebugEnabled()){
-			LOGGER.debug("TransactionProxy 释放 redis 连接...");
+		if (!hasReturn.get()) {
+			jedis.close();
+			hasReturn.set(true);
+			
+			if(LOGGER.isDebugEnabled()){
+				LOGGER.debug("TransactionProxy 释放 redis 连接...");
+			}
 		}
 		
 		return result;
@@ -55,10 +67,14 @@ public class TransactionProxy extends Transaction {
 	public String discard() {
 		String result = super.discard();
 		
-		jedis.close();
-		
-		if(LOGGER.isDebugEnabled()){
-			LOGGER.debug("TransactionProxy 释放 redis 连接...");
+		if (!hasReturn.get()) {
+			jedis.close();
+			hasReturn.set(true);
+			
+			if(LOGGER.isDebugEnabled()){
+				LOGGER.debug("TransactionProxy 释放 redis 连接...");
+			}
+			
 		}
 		
 		return result;

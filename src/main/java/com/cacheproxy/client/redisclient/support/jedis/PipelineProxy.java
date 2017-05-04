@@ -1,6 +1,7 @@
 package com.cacheproxy.client.redisclient.support.jedis;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,8 @@ public class PipelineProxy extends Pipeline {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(PipelineProxy.class);
 	
+	private AtomicBoolean hasReturn = new AtomicBoolean();
+	
 	private Jedis jedis;
 
 	public PipelineProxy(Jedis jedis) {
@@ -26,20 +29,30 @@ public class PipelineProxy extends Pipeline {
 	@Override
 	public void sync() {
 		super.sync();
-		jedis.close();
 		
-		if(LOGGER.isDebugEnabled()){
-			LOGGER.debug("PipelineProxy 释放 连接 ");
+		if (!hasReturn.get()) {
+			jedis.close();
+			hasReturn.set(true);
+			
+			if(LOGGER.isDebugEnabled()){
+				LOGGER.debug("PipelineProxy 释放 连接 ");
+			}
 		}
+		
+		
 	}
 
 	@Override
 	public List<Object> syncAndReturnAll() {
 		List<Object> result = super.syncAndReturnAll();
-		jedis.close();
 		
-		if(LOGGER.isDebugEnabled()){
-			LOGGER.debug("PipelineProxy 释放 连接 ");
+		if (!hasReturn.get()) {
+			jedis.close();
+			hasReturn.set(true);
+			
+			if(LOGGER.isDebugEnabled()){
+				LOGGER.debug("PipelineProxy 释放 连接 ");
+			}
 		}
 		
 		return result;

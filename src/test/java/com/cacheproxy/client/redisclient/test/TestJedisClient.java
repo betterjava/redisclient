@@ -73,4 +73,31 @@ public class TestJedisClient {
 		}
 	}
 	
+	@Test
+	public void testJedisProxy1(){
+		
+		JedisProxy jedisProxy = JedisProxyFactory.createJedisProxy();
+		for (int i = 0; i < 100; i++) {
+			jedisProxy.set("cookie", i+"");
+			System.out.println(jedisProxy.get("cookie"));
+		}
+	}
+	
+	@Test
+	public void testJedisProxyPipeline1(){
+		
+		JedisProxy jedisProxy = JedisProxyFactory.createJedisProxy();
+		
+		for (int i = 0; i < 100; i++) {
+			Pipeline pp = jedisProxy.pipelined();
+			try {
+				pp.set("cookie", i+"");
+				pp.get("cookie");
+				System.out.println(pp.syncAndReturnAll());
+			} finally{
+				pp.clear();
+			}
+		}
+	}
+	
 }
