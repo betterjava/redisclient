@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.ShardedJedisPipeline;
+import redis.clients.jedis.Transaction;
 
 import com.cacheproxy.client.redisclient.JedisProxy;
 import com.cacheproxy.client.redisclient.JedisProxyFactory;
@@ -31,9 +32,16 @@ public class TestJedisClient {
 	public void testJedisProxyPipeline() {
 		JedisProxy jedisProxy = JedisProxyFactory.createJedisProxy();
 		Pipeline pi = jedisProxy.pipelined();
-		pi.set("cookie", "helloboy");
-		pi.get("cookie");
-		System.out.println(pi.syncAndReturnAll());
+		try {
+			pi.set("cookie", "helloboy");
+			pi.get("cookie");
+			System.out.println(pi.syncAndReturnAll());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}finally{
+			pi.clear();
+		}
+		
 	}
 	
 	@Test
@@ -51,4 +59,18 @@ public class TestJedisClient {
 		pi.get("cookie");
 		System.out.println(pi.syncAndReturnAll());
 	}
+	
+	@Test
+	public void testTr(){
+		JedisProxy jedisProxy = JedisProxyFactory.createJedisProxy();
+		Transaction tt = null;
+		try {
+			tt = jedisProxy.multi();
+			tt.set("cookie", "10000");
+			tt.exec();
+		} finally{
+			tt.clear();
+		}
+	}
+	
 }
