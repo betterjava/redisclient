@@ -30,4 +30,11 @@ public class MethdoInvokeAuthUtil {
 		}
 		return getMethodSignature(method).startsWith("pipelined");
 	}
+	
+	public static boolean isMulti(Method method) {
+		if (method == null) {
+			return false;
+		}
+		return getMethodSignature(method).startsWith("multi");
+	}
 }

@@ -13,6 +13,7 @@ import redis.clients.jedis.ShardedJedis;
 import redis.clients.util.Pool;
 
 import com.cacheproxy.client.redisclient.support.jedis.JedisPipelineWrapper;
+import com.cacheproxy.client.redisclient.support.jedis.JedisTransactionWrapper;
 import com.cacheproxy.client.redisclient.support.shardedjedis.ShardedJedisPipelineWrapper;
 
 /**
@@ -40,9 +41,13 @@ public class JedisProxyInteceptor implements MethodInterceptor {
 			MethodProxy proxy) throws Throwable {
 
 		Closeable closeAble = null;
-		boolean isPipeline = false;
+		boolean isExclusive = false;// 独占连接
 		try {
-			isPipeline = MethdoInvokeAuthUtil.isPipeline(method);
+			
+			boolean isPipeline = MethdoInvokeAuthUtil.isPipeline(method);
+			boolean isMulti = MethdoInvokeAuthUtil.isMulti(method);
+			
+			isExclusive = isPipeline || isMulti;
 			
 			closeAble = (Closeable) jedisPool.getResource();
 			
@@ -50,18 +55,25 @@ public class JedisProxyInteceptor implements MethodInterceptor {
 				LOGGER.debug("intercept 获取 redis 连接...");
 			}
 			
-			if(!isPipeline){
+			if(!isExclusive){
 				return method.invoke(closeAble, args);
 			}
+			
 			if(closeAble instanceof Jedis){
-				return method.invoke(new JedisPipelineWrapper((Jedis) closeAble), args);
+				if(isPipeline){
+					return method.invoke(new JedisPipelineWrapper((Jedis) closeAble), args);
+				}
+				if(isMulti){
+					return method.invoke(new JedisTransactionWrapper((Jedis) closeAble), args);
+				}
 			}else{
 				ShardedJedisPipelineWrapper pipelineWrapper = new ShardedJedisPipelineWrapper(null);
 				pipelineWrapper.setShardedJedis((ShardedJedis) closeAble);
-				return method.invoke(pipelineWrapper, args);
+				return method.invoke(pipelineWrapper, args);	
 			}
+			return method.invoke(closeAble, args);
 		} finally {
-			if (closeAble != null && !isPipeline) {
+			if (closeAble != null && !isExclusive) {
 				closeAble.close();
 				
 				if(LOGGER.isDebugEnabled()){
