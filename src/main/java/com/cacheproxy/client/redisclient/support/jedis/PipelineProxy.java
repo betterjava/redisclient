@@ -30,6 +30,7 @@ public class PipelineProxy extends Pipeline {
 	public void sync() {
 		super.sync();
 		
+		
 		if (!hasReturn.get()) {
 			jedis.close();
 			hasReturn.set(true);

@@ -48,7 +48,7 @@ public class TestJedisClient {
 	public void testShardJedisProxy(){
 		ShardedJedisProxy proxy = JedisProxyFactory.createShardedJedisProxy("myredis.properties");
 		proxy.set("cookie", "girl");
-		Assert.assertEquals("hello", proxy.get("cookie"));
+		Assert.assertEquals("girl", proxy.get("cookie"));
 	}
 	
 	@Test
@@ -87,6 +87,8 @@ public class TestJedisClient {
 	public void testJedisProxyPipeline1(){
 		
 		JedisProxy jedisProxy = JedisProxyFactory.createJedisProxy();
+		jedisProxy = JedisProxyFactory.createJedisProxy();
+		jedisProxy = JedisProxyFactory.createJedisProxy();
 		
 		for (int i = 0; i < 100; i++) {
 			Pipeline pp = jedisProxy.pipelined();
