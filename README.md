@@ -71,4 +71,33 @@ maxIdle=5
 ### 代码引用
 ---
 #### 普通redis 命令
+##### jedis
+```
+@Test
+public void testJedisProxy() {
+	// 可以将 此 jedisProxy 作为静态变量
+	// 默认从 redisclient.properties 加载配置，也可以自定义配置文件名称 JedisProxyFactory.createJedisProxy("my-redis.properties");
+	JedisProxy jedisProxy = JedisProxyFactory.createJedisProxy();
+	
+	jedisProxy.set("cookie", "hello");
+
+	Assert.assertEquals("hello", jedisProxy.get("cookie"));
+}
+```
+##### shardedjedis
+```
+@Test
+public void testShardJedisProxy(){
+	// 可以将 此 proxy 作为静态变量
+	// 默认从 redisclient.properties 加载配置，也可以自定义配置文件名称 JedisProxyFactory.createJedisProxy("my-redis.properties");
+	ShardedJedisProxy proxy = JedisProxyFactory.createShardedJedisProxy();
+	proxy.set("cookie", "girl");
+	Assert.assertEquals("girl", proxy.get("cookie"));
+}
+```
 #### 对于独占连接的操作，还是应当有try finally 模块
+说明：以事务操作为例子，虽然开始事务时获取连接，关闭事务时释放连接，但是如果发生异常使得关闭事务得不到执行，则连接就不会得到释放，所以需要手动加上try   finally 模块
+##### 管道操作
+```
+```
+##### 事务操作
