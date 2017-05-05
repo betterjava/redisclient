@@ -16,7 +16,7 @@
 ```
 
 ### resources 目录添加 redisclient.properties
-不管哪种连接池，该配置都支持所有  org.apache.commons.pool2.impl.GenericObjectPoolConfig(http://commons.apache.org/proper/commons-pool/api-2.4.2/index.html) 的所有属性
+不管哪种连接池，该配置都支持  org.apache.commons.pool2.impl.GenericObjectPoolConfig(http://commons.apache.org/proper/commons-pool/api-2.4.2/index.html) 的所有属性
 #### JedisPool 配置举例
 
 ```
