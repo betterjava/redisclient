@@ -91,7 +91,9 @@ public void testShardJedisProxy(){
 	// 可以将 此 proxy 作为静态变量
 	// 默认从 redisclient.properties 加载配置，也可以自定义配置文件名称 JedisProxyFactory.createShardedJedisProxy("my-redis.properties");
 	ShardedJedisProxy proxy = JedisProxyFactory.createShardedJedisProxy();
+
 	proxy.set("cookie", "girl");
+
 	Assert.assertEquals("girl", proxy.get("cookie"));
 }
 ```
