@@ -11,7 +11,6 @@ import redis.clients.jedis.Pipeline;
 
 /**
  * @author cookie
- * @email lijiaqiya@163.com
  * @date May 3, 2017
  */
 public class PipelineProxy extends Pipeline {

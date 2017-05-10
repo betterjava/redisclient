@@ -2,7 +2,6 @@ package com.cacheproxy.client.redisclient.config;
 
 /**
  * @author cookie
- * @email  lijiaqiya@163.com
  * @date   May 3, 2017
  */
 public enum ConfigType {

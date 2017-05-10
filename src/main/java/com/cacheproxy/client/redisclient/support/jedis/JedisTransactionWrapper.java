@@ -9,7 +9,6 @@ import redis.clients.jedis.TransactionBlock;
 
 /**
  * @author cookie
- * @email  lijiaqiya@163.com
  * @date   May 4, 2017
  */
 public class JedisTransactionWrapper extends BinaryJedis{

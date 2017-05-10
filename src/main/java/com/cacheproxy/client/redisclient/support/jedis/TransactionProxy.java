@@ -12,7 +12,6 @@ import redis.clients.jedis.Transaction;
 
 /**
  * @author cookie
- * @email lijiaqiya@163.com
  * @date May 4, 2017
  */
 public class TransactionProxy extends Transaction {

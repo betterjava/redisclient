@@ -10,7 +10,6 @@ import com.cacheproxy.client.redisclient.support.shardedjedis.ShardedJedisPipeli
 
 /**
  * @author cookie
- * @email  lijiaqiya@163.com
  * @date   May 4, 2017
  */
 public class ReleaseUtil {

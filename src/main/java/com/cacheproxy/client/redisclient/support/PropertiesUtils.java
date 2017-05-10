@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author cookie
- * @email lijiaqiya@163.com
  * @date May 3, 2017
  */
 public class PropertiesUtils {
