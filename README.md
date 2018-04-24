@@ -1,7 +1,7 @@
 # redisclient ![version](https://img.shields.io/badge/version-0.0.1-blue.svg)
 对jedis 的一个封装，主要提供两种功能
 - 支持四种连接池配置：JedisPool/JedisSentinelPool/ShardedJedisPool/ShardedJedisSentinelPool
-- redis 相关操作不需要手动 获取连接 释放连接
+- redis 相关操作不需要手动 获取连接 释放连接 加个注释怎么提交不上去
 ---
 ## 使用方法
 ---

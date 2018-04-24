@@ -68,4 +68,6 @@ public class PipelineProxy extends Pipeline {
 			}
 		}
 	}
+
+	public void test(){};
 }
