@@ -108,8 +108,9 @@ public final class ShardedJedisSentinelPool extends Pool<ShardedJedis> {
         if (currentShardMasters != null && shardMasters != null) {
             if (currentShardMasters.size() == shardMasters.size()) {
                 for (int i = 0; i < currentShardMasters.size(); i++) {
-                    if (!currentShardMasters.get(i).equals(shardMasters.get(i)))
+                    if (!currentShardMasters.get(i).equals(shardMasters.get(i))){
                         return false;
+                    }
                 }
                 return true;
             }
@@ -211,6 +212,7 @@ public final class ShardedJedisSentinelPool extends Pool<ShardedJedis> {
         return new HostAndPort(host, port);
     }
 
+    @Override
     public void destroy() {
         for (MasterListener m : masterListeners) {
             m.shutdown();
@@ -269,6 +271,7 @@ public final class ShardedJedisSentinelPool extends Pool<ShardedJedis> {
             this.subscribeRetryWaitTimeMillis = subscribeRetryWaitTimeMillis;
         }
 
+        @Override
         public void run() {
 
             running.set(true);
@@ -362,11 +365,13 @@ public final class ShardedJedisSentinelPool extends Pool<ShardedJedis> {
             this.keyTagPattern = keyTagPattern;
         }
 
+        @Override
         public PooledObject<ShardedJedis> makeObject() throws Exception {
             ShardedJedis jedis = new ShardedJedis(shards, algo, keyTagPattern);
             return new DefaultPooledObject<ShardedJedis>(jedis);
         }
 
+        @Override
         public void destroyObject(PooledObject<ShardedJedis> pooledShardedJedis) throws Exception {
             final ShardedJedis shardedJedis = pooledShardedJedis.getObject();
             for (Jedis jedis : shardedJedis.getAllShards()) {
@@ -383,6 +388,7 @@ public final class ShardedJedisSentinelPool extends Pool<ShardedJedis> {
             }
         }
 
+        @Override
         public boolean validateObject(PooledObject<ShardedJedis> pooledShardedJedis) {
             try {
                 ShardedJedis jedis = pooledShardedJedis.getObject();
@@ -397,10 +403,12 @@ public final class ShardedJedisSentinelPool extends Pool<ShardedJedis> {
             }
         }
 
+        @Override
         public void activateObject(PooledObject<ShardedJedis> p) throws Exception {
 
         }
 
+        @Override
         public void passivateObject(PooledObject<ShardedJedis> p) throws Exception {
 
         }
