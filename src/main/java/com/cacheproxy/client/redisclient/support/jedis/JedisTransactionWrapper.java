@@ -11,11 +11,11 @@ import redis.clients.jedis.TransactionBlock;
  * @author cookie
  * @date   May 4, 2017
  */
-public class JedisTransactionWrapper extends BinaryJedis{
+public class JedisTransactionWrapper extends BinaryJedis {
 
 	private Jedis jedis;
 	
-	public JedisTransactionWrapper(Jedis jedis){
+	public JedisTransactionWrapper(Jedis jedis) {
 		this.jedis = jedis;
 	}
 	
