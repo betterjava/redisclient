@@ -38,7 +38,6 @@ public class PipelineProxy extends Pipeline {
 				LOGGER.debug("PipelineProxy 释放 连接 ");
 			}
 		}
-
 	}
 
 	@Override
@@ -68,6 +67,4 @@ public class PipelineProxy extends Pipeline {
 			}
 		}
 	}
-
-	public void test(){};
 }
