@@ -24,7 +24,7 @@ import com.cacheproxy.client.redisclient.support.shardedjedis.ShardedJedisPipeli
  */
 public class JedisProxyInteceptor implements MethodInterceptor {
 	
-	private final static Logger LOGGER = LoggerFactory.getLogger(JedisProxyInteceptor.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(JedisProxyInteceptor.class);
 	
 	private  Pool<?> jedisPool;
 	
