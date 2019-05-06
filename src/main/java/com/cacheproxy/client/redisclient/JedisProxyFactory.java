@@ -9,8 +9,7 @@ import com.cacheproxy.client.redisclient.support.AbstractJedisProxyFactory;
  * @date 2017-3-13
  */
 public class JedisProxyFactory extends AbstractJedisProxyFactory{
-	
-	
+
 	public static JedisProxy createJedisProxy(){
 		return initJedisProxy(DEFAULT_CONFIG_PROPERTIES);
 	}

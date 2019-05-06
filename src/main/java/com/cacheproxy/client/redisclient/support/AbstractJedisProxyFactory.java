@@ -20,7 +20,7 @@ public class AbstractJedisProxyFactory {
 
 	private static Map<String, ShardedJedisProxy> shardedJedisProxyCache = new ConcurrentHashMap<String, ShardedJedisProxy>();
 
-	protected static JedisProxy initJedisProxy(String configProperties) {// 这个过程比较耗时
+	protected static JedisProxy initJedisProxy(String configProperties) { // 这个过程比较耗时
 
 		JedisProxy jedisProxy = jedisProxyCache.get(configProperties);
 
